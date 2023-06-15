@@ -10,8 +10,6 @@
 
 .footer__copyright {
   margin: 0;
-  width: 318px;
-  height: 18px;
   margin-top: 67px;
   margin-bottom: 60px;
 }
@@ -23,8 +21,6 @@
     text-align: left;
   }
   .footer__copyright {
-    width: 282px;
-    height: 14px;
     margin: 48px 19px 36px 19px;
   }
 }

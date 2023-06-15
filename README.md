@@ -23,3 +23,7 @@ Good luck and have fun!
 **Github_Link**
 
 [Link to the github site](https://jensen654.github.io/se_project_aroundtheus/)
+
+**Description**
+
+This project is a website built from scratch using a figma model and help videos. It is meant to display the different uses of flex and grid containers.
