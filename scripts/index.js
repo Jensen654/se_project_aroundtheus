@@ -1,4 +1,4 @@
-let initialCards = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -39,15 +39,15 @@ const cardTemplate =
 const cardListEl = document.querySelector(".cards__list");
 
 profileEditButton.addEventListener("click", function (event) {
-  useCurrentProfileInfo();
-  modal.classList.add("modal__opened");
+  fillProfileInputs();
+  modal.classList.add("modal_opened");
 });
 
 modalClose.addEventListener("click", function (event) {
-  modal.classList.remove("modal__opened");
+  modal.classList.remove("modal_opened");
 });
 
-function useCurrentProfileInfo() {
+function fillProfileInputs() {
   modalProfileName.value = profileName.textContent;
   modalProfileDescription.value = profileDescription.textContent;
 }
@@ -56,7 +56,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = modalProfileName.value;
   profileDescription.textContent = modalProfileDescription.value;
-  modal.classList.remove("modal__opened");
+  modal.classList.remove("modal_opened");
 }
 
 function getCardElement(data) {
