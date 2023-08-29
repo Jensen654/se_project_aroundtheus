@@ -82,7 +82,7 @@ function getCardElement(data) {
   const cardDeleteButton = cardElement.querySelector(".card__trash-button");
   const previewImage = previewImageModal.querySelector(".modal__image");
   const previewDescription = previewImageModal.querySelector(
-    ".modal__image_description"
+    ".modal__image-description"
   );
 
   likeButton.addEventListener("click", (event) => {

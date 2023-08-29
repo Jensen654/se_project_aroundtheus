@@ -32,7 +32,7 @@
   width: 100%;
 }
 
-.modal__container_image {
+.modal__container-image {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -106,7 +106,7 @@
   opacity: 0.6;
 }
 
-.modal__image_description {
+.modal__image-description {
   font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 400;
