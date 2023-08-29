@@ -63,7 +63,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = modalProfileName.value;
   profileDescription.textContent = modalProfileDescription.value;
-  editProfileModal.classList.remove("modal_opened");
+  closeModal(editProfileModal);
 }
 
 function handleCardFormSubmit(evt) {
@@ -71,7 +71,8 @@ function handleCardFormSubmit(evt) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link });
-  editCardModal.classList.remove("modal_opened");
+  closeModal(editCardModal);
+  cardEditForm.reset();
 }
 
 function getCardElement(data) {
@@ -94,7 +95,7 @@ function getCardElement(data) {
   });
 
   cardImage.addEventListener("click", (event) => {
-    previewImageModal.classList.add("modal_opened");
+    openModal(previewImageModal);
     previewImage.src = data.link;
     previewImage.alt = data.name;
     previewDescription.textContent = data.name;
@@ -112,23 +113,31 @@ function renderCard(cardData) {
   cardListEl.prepend(cardElement);
 }
 
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+}
+
 //
 //Event Listeners
 profileEditButton.addEventListener("click", function (event) {
   fillProfileInputs();
-  editProfileModal.classList.add("modal_opened");
+  openModal(editProfileModal);
 });
 
 editModalClose.addEventListener("click", (event) => {
-  editProfileModal.classList.remove("modal_opened");
+  closeModal(editProfileModal);
 });
 
 addNewCard.addEventListener("click", (event) => {
-  editCardModal.classList.add("modal_opened");
+  openModal(editCardModal);
 });
 
 cardModalClose.addEventListener("click", (event) => {
-  editCardModal.classList.remove("modal_opened");
+  closeModal(editCardModal);
 });
 
 profileEditForm.addEventListener("submit", handleProfileFormSubmit);
@@ -136,7 +145,7 @@ profileEditForm.addEventListener("submit", handleProfileFormSubmit);
 cardEditForm.addEventListener("submit", handleCardFormSubmit);
 
 imageModalClose.addEventListener("click", (event) => {
-  previewImageModal.classList.remove("modal_opened");
+  closeModal(previewImageModal);
 });
 
 //Rendering Cards

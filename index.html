@@ -44,51 +44,55 @@
 
     <div id="edit-modal" class="modal">
       <div class="modal__container">
-        <button class="modal__close"></button>
-        <p class="modal__heading">Edit profile</p>
+        <button type="button" class="modal__close"></button>
+        <h2 class="modal__heading">Edit profile</h2>
         <form class="modal__container-form">
           <input
             class="modal__container-input js-modalName"
             type="text"
             placeholder="Name"
             name="title"
+            required
           />
           <input
             class="modal__container-input js-modalDescription"
             type="text"
             placeholder="Description"
             name="description"
+            required
           />
-          <button class="modal__button">Save</button>
+          <button type="submit" class="modal__button">Save</button>
         </form>
       </div>
     </div>
 
     <div id="card-modal" class="modal">
       <div class="modal__container">
-        <button class="modal__close"></button>
-        <p class="modal__heading">New Place</p>
+        <button type="button" class="modal__close"></button>
+        <h2 class="modal__heading">New Place</h2>
         <form class="modal__container-form">
           <input
             class="modal__container-input js-modalName"
             type="text"
             placeholder="Title"
             name="title"
+            required
           />
           <input
             class="modal__container-input js-modalUrl"
             type="text"
             placeholder="Image Link"
             name="description"
+            required
           />
-          <button class="modal__button">Create</button>
+          <button type="submit" class="modal__button">Create</button>
         </form>
       </div>
     </div>
 
     <div id="image-modal" class="modal">
       <div class="modal__container-image">
-        <button class="modal__close"></button>
+        <button type="button" class="modal__close"></button>
         <img src="#" alt="" class="modal__image" />
         <p class="modal__image-description"></p>
       </div>
@@ -105,6 +109,6 @@
       </li>
     </template>
 
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>
