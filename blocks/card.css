@@ -13,6 +13,10 @@
   overflow: hidden;
 }
 
+.card__img:hover {
+  cursor: pointer;
+}
+
 .card__description {
   display: flex;
   background-color: white;
@@ -44,6 +48,25 @@
 }
 
 .card__like-button:hover {
+  opacity: 50%;
+  cursor: pointer;
+}
+
+.card__like-button_active {
+  background: url(../images/heartIconActive.svg);
+}
+
+.card__trash-button {
+  background: url(../images/Trash.svg) center no-repeat;
+  position: absolute;
+  height: 19.3px;
+  width: 18px;
+  border: none;
+  align-self: flex-end;
+  margin: 18px 13px;
+}
+
+.card__trash-button:hover {
   opacity: 50%;
   cursor: pointer;
 }

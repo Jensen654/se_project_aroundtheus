@@ -42,7 +42,7 @@
       </footer>
     </div>
 
-    <div class="modal">
+    <div id="edit-modal" class="modal">
       <div class="modal__container">
         <button class="modal__close"></button>
         <p class="modal__heading">Edit profile</p>
@@ -64,9 +64,40 @@
       </div>
     </div>
 
+    <div id="card-modal" class="modal">
+      <div class="modal__container">
+        <button id="card-modal_close" class="modal__close"></button>
+        <p class="modal__heading">New Place</p>
+        <form class="modal__container-form">
+          <input
+            class="modal__container-input js-modalName"
+            type="text"
+            placeholder="Title"
+            name="title"
+          />
+          <input
+            class="modal__container-input js-modalUrl"
+            type="text"
+            placeholder="Image Link"
+            name="description"
+          />
+          <button class="modal__button">Create</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="image-modal" class="modal">
+      <div class="modal__container_image">
+        <button id="card-modal_close" class="modal__close"></button>
+        <img src="" alt="" class="modal__image" />
+        <p class="modal__image_description"></p>
+      </div>
+    </div>
+
     <template class="card-template">
       <li class="card">
         <img class="card__img" src="" alt="" />
+        <button type="button" class="card__trash-button"></button>
         <div class="card__description">
           <h2 class="card__text"></h2>
           <button type="button" class="card__like-button"></button>
