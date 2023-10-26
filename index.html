@@ -42,55 +42,77 @@
       </footer>
     </div>
 
-    <div id="edit-modal" class="modal">
-      <div class="modal__container">
+    <div id="edit-modal" class="modal js-modals">
+      <div class="modal__container js-modalProfileContainer">
         <button type="button" class="modal__close"></button>
         <h2 class="modal__heading">Edit profile</h2>
-        <form class="modal__container-form">
+        <form class="modal__container-form js-modal-profile-form">
           <input
+            id="modal-name"
             class="modal__container-input js-modalName"
             type="text"
             placeholder="Name"
             name="title"
+            minlength="2"
+            maxlength="40"
             required
           />
+          <span id="modal-name-error" class="modal__error"></span>
           <input
+            id="modal-description"
             class="modal__container-input js-modalDescription"
             type="text"
             placeholder="Description"
             name="description"
+            minlength="2"
+            maxlength="200"
             required
           />
-          <button type="submit" class="modal__button">Save</button>
+          <span id="modal-description-error" class="modal__error"></span>
+          <button type="submit" class="modal__button modal__button" disabled>
+            Save
+          </button>
         </form>
       </div>
     </div>
 
-    <div id="card-modal" class="modal">
-      <div class="modal__container">
+    <div id="card-modal" class="modal js-modals">
+      <div class="modal__container js-modalAddCardContainer">
         <button type="button" class="modal__close"></button>
         <h2 class="modal__heading">New Place</h2>
-        <form class="modal__container-form">
+        <form class="modal__container-form js-modal-add-card-form">
           <input
+            id="modal-name"
             class="modal__container-input js-modalName"
             type="text"
             placeholder="Title"
             name="title"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span id="modal-name-error" class="modal__error"></span>
           <input
+            id="modal-url"
             class="modal__container-input js-modalUrl"
-            type="text"
+            type="url"
             placeholder="Image Link"
             name="description"
             required
           />
-          <button type="submit" class="modal__button">Create</button>
+          <span id="modal-url-error" class="modal__error"></span>
+          <button
+            type="submit"
+            class="modal__button modal__button_disabled"
+            disabled
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>
 
-    <div id="image-modal" class="modal">
+    <div id="image-modal" class="modal js-modals">
       <div class="modal__container-image">
         <button type="button" class="modal__close"></button>
         <img src="#" alt="" class="modal__image" />
@@ -110,5 +132,6 @@
     </template>
 
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validation.js" defer></script>
   </body>
 </html>

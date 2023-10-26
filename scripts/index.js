@@ -51,6 +51,11 @@ const cardUrlInput = editCardModal.querySelector(".js-modalUrl");
 const cardTemplate =
   document.querySelector(".card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
+//Modals
+const modals = Array.from(document.querySelectorAll(".js_modals"));
+const modalImage = previewImageModal.querySelector(".modal__container-image");
+const profileContainer = document.querySelector(".js-modalProfileContainer");
+const addCardContainer = document.querySelector(".js-modalAddCardContainer");
 
 //
 //Functions
@@ -146,6 +151,38 @@ cardEditForm.addEventListener("submit", handleCardFormSubmit);
 
 imageModalClose.addEventListener("click", (event) => {
   closeModal(previewImageModal);
+});
+
+previewImageModal.addEventListener("click", (event) => {
+  closeModal(previewImageModal);
+});
+
+editCardModal.addEventListener("click", (event) => {
+  closeModal(editCardModal);
+});
+
+editProfileModal.addEventListener("click", (event) => {
+  closeModal(editProfileModal);
+});
+
+modalImage.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+profileContainer.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+addCardContainer.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeModal(previewImageModal);
+    closeModal(editCardModal);
+    closeModal(editProfileModal);
+  }
 });
 
 //Rendering Cards
