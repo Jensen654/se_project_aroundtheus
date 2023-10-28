@@ -80,6 +80,13 @@ function handleCardFormSubmit(evt) {
   cardEditForm.reset();
 }
 
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedPopup = document.querySelector(".modal__opened");
+    closeModal(openedPopup);
+  }
+}
+
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__text");
@@ -119,11 +126,13 @@ function renderCard(cardData) {
 }
 
 function openModal(modal) {
-  modal.classList.add("modal_opened");
+  modal.classList.add("modal__opened");
+  document.addEventListener("keydown", closeByEscape);
 }
 
 function closeModal(modal) {
-  modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__opened");
+  document.removeEventListener("keydown", closeByEscape);
 }
 
 //
@@ -175,14 +184,6 @@ profileContainer.addEventListener("click", (event) => {
 
 addCardContainer.addEventListener("click", (event) => {
   event.stopPropagation();
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closeModal(previewImageModal);
-    closeModal(editCardModal);
-    closeModal(editProfileModal);
-  }
 });
 
 //Rendering Cards
