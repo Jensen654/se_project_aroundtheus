@@ -1,5 +1,3 @@
-import Card from "../components/card.js";
-
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -59,21 +57,6 @@ const modalImage = previewImageModal.querySelector(".modal__container-image");
 const profileContainer = document.querySelector(".js-modalProfileContainer");
 const addCardContainer = document.querySelector(".js-modalAddCardContainer");
 
-// initialCards.forEach((card) => {
-//   const card = new Card(card, "card-template");
-//   card.returnCardElement();
-// });
-
-const card = new Card(
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  cardTemplate,
-  handleImageClick()
-);
-card.returnCardElement();
-
 //
 //Functions
 function fillProfileInputs() {
@@ -104,37 +87,24 @@ function closeByEscape(evt) {
   }
 }
 
-function handleImageClick(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__img");
-  const previewImage = previewImageModal.querySelector(".modal__image");
-  const previewDescription = previewImageModal.querySelector(
-    ".modal__image-description"
-  );
-
-  cardImage.addEventListener("click", (event) => {
-    document.querySelector("#image-modal").classList.add("modal_opened");
-  });
-}
-
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__text");
   const cardImage = cardElement.querySelector(".card__img");
-  // const likeButton = cardElement.querySelector(".card__like-button");
-  // const cardDeleteButton = cardElement.querySelector(".card__trash-button");
+  const likeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__trash-button");
   const previewImage = previewImageModal.querySelector(".modal__image");
   const previewDescription = previewImageModal.querySelector(
     ".modal__image-description"
   );
 
-  // likeButton.addEventListener("click", (event) => {
-  //   likeButton.classList.toggle("card__like-button_active");
-  // });
+  likeButton.addEventListener("click", (event) => {
+    likeButton.classList.toggle("card__like-button_active");
+  });
 
-  // cardDeleteButton.addEventListener("click", (event) => {
-  //   cardElement.remove();
-  // });
+  cardDeleteButton.addEventListener("click", (event) => {
+    cardElement.remove();
+  });
 
   cardImage.addEventListener("click", (event) => {
     openModal(previewImageModal);

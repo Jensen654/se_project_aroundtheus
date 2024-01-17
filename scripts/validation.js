@@ -1,7 +1,7 @@
 // enabling validation by calling enableValidation()
 // pass all the settings on call
 
-const options = {
+const config = {
   formSelector: ".modal__container-form",
   inputSelector: ".modal__container-input",
   submitButtonSelector: ".modal__button",
@@ -82,4 +82,4 @@ function enableValidation(options) {
   });
 }
 
-enableValidation(options);
+enableValidation(config);
