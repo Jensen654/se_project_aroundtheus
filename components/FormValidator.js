@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(options, formElement) {
     this._options = options;
     this._inputSelector = options.inputSelector;
@@ -30,9 +30,9 @@ class FormValidator {
 
   _checkInputValidity(inputEl) {
     if (!inputEl.validity.valid) {
-      _showInputError(inputEl);
+      this._showInputError(inputEl);
     } else {
-      _hideInputError(inputEl);
+      this._hideInputError(inputEl);
     }
   }
 
@@ -54,13 +54,13 @@ class FormValidator {
 
   _setEventListeners(inputEl, submitButton) {
     inputEl.addEventListener("input", () => {
-      _checkInputValidity(inputEl);
-      _toggleButtonState(inputEl, submitButton);
+      this._checkInputValidity(inputEl);
+      this._toggleButtonState(inputEl, submitButton);
     });
   }
 
-  enableValidations() {
-    const inputEl = this._formElement.querySelector(this._inputSelector); //[...] is the same as Array.from
+  enableValidation() {
+    const inputEls = this._formElement.querySelectorAll(this._inputSelector);
     const submitButton = this._formElement.querySelector(
       this._submitButtonSelector
     );
@@ -69,18 +69,20 @@ class FormValidator {
       evt.preventDefault();
     });
 
-    _setEventListeners(inputEl, submitButton);
+    inputEls.forEach((inputEl) => {
+      this._setEventListeners(inputEl, submitButton);
+    });
   }
 }
 
-const options = {
-  formSelector: ".modal__container-form",
-  inputSelector: ".modal__container-input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_error",
-  errorClass: "modal__error_visible",
-};
+// const options = {
+//   formSelector: ".modal__container-form",
+//   inputSelector: ".modal__container-input",
+//   submitButtonSelector: ".modal__button",
+//   inactiveButtonClass: "modal__button_disabled",
+//   inputErrorClass: "modal__input_error",
+//   errorClass: "modal__error_visible",
+// };
 
-const editFormValidator = new FormValidator(options, editForm);
-const addFormValidator = new FormValidator(options, addForm);
+// const editFormValidator = new FormValidator(options, editForm);
+// const addFormValidator = new FormValidator(options, addForm);
