@@ -100,7 +100,7 @@ function handleCardFormSubmit(evt) {
 
 function closeByEscape(evt) {
   if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".modal_opened");
+    const openedPopup = document.querySelector(".modal__opened");
     closeModal(openedPopup);
   }
 }
@@ -162,12 +162,12 @@ function renderCard(cardData) {
 }
 
 function openModal(modal) {
-  modal.classList.add("modal_opened");
+  modal.classList.add("modal__opened");
   document.addEventListener("keydown", closeByEscape);
 }
 
 function closeModal(modal) {
-  modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__opened");
   document.removeEventListener("keydown", closeByEscape);
 }
 
