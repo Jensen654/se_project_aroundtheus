@@ -1,20 +1,3 @@
-function closeByEscape(evt) {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".modal_opened");
-    closeModal(openedPopup);
-  }
-}
-
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", closeByEscape);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", closeByEscape);
-}
-
 export default class Card {
   constructor(data, cardSelector, handleImageClick) {
     this._name = data.name;
@@ -25,7 +8,7 @@ export default class Card {
 
   _setEventListeners() {
     this._cardImageElement.addEventListener("click", () =>
-      this._handleImageClick()
+      this._handleImageClick(this)
     );
     this._likeButton.addEventListener("click", () => this._handleLikeButton());
     this._deleteButton.addEventListener("click", () =>
@@ -41,14 +24,6 @@ export default class Card {
   _handleLikeButton() {
     this._likeButton.classList.toggle("card__like-button_active");
   }
-
-  // _handleImageClick() {
-
-  //   //
-  //   const previewImageModal = document.querySelector("#image-modal");
-  //   openModal(previewImageModal);
-  //   document.querySelector("#image-modal").classList.add("modal_opened");
-  // }
 
   returnCardElement() {
     //get card view

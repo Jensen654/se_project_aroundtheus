@@ -106,51 +106,17 @@ function closeByEscape(evt) {
 }
 
 function handleImageClick(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__img");
   const previewImage = previewImageModal.querySelector(".modal__image");
   const previewDescription = previewImageModal.querySelector(
     ".modal__image-description"
   );
-  cardImage.addEventListener("click", (event) => {
-    document.querySelector("#image-modal").classList.add("modal_opened");
-  });
+
   openModal(previewImageModal);
   document.querySelector("#image-modal").classList.add("modal_opened");
+  previewImage.src = data._link;
+  previewImage.alt = data._name;
+  previewDescription.textContent = data._name;
 }
-
-// function getCardElement(data) {
-//   const cardElement = cardTemplate.cloneNode(true);
-//   const cardTitle = cardElement.querySelector(".card__text");
-//   const cardImage = cardElement.querySelector(".card__img");
-//   const likeButton = cardElement.querySelector(".card__like-button");
-//   const cardDeleteButton = cardElement.querySelector(".card__trash-button");
-//   const previewImage = previewImageModal.querySelector(".modal__image");
-//   const previewDescription = previewImageModal.querySelector(
-//     ".modal__image-description"
-//   );
-
-//   likeButton.addEventListener("click", (event) => {
-//     likeButton.classList.toggle("card__like-button_active");
-//   });
-
-//   cardDeleteButton.addEventListener("click", (event) => {
-//     cardElement.remove();
-//   });
-
-//   cardImage.addEventListener("click", (event) => {
-//     openModal(previewImageModal);
-//     previewImage.src = data.link;
-//     previewImage.alt = data.name;
-//     previewDescription.textContent = data.name;
-//   });
-
-//   cardImage.src = data.link;
-//   cardImage.alt = data.name;
-//   cardTitle.textContent = data.name;
-
-//   return cardElement;
-// }
 
 function renderCard(cardData) {
   const cardElement = new Card(
@@ -231,4 +197,3 @@ initialCards.forEach((card) => {
   ).returnCardElement();
   cardListEl.prepend(cardElement);
 });
-// initialCards.forEach((item) => renderCard(item));
