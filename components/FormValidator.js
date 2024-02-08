@@ -36,53 +36,40 @@ export default class FormValidator {
     }
   }
 
-  _toggleButtonState(inputEl, submitButton) {
-    let foundInvalid = false;
+  _checkFormValidity() {
+    return Array.from(this._inputEls).every((input) => input.validity.valid);
+  }
 
-    if (!inputEl.validity.valid) {
-      foundInvalid = true;
-    }
+  toggleButtonState() {
+    let foundInvalid = !this._checkFormValidity();
 
     if (foundInvalid) {
-      submitButton.classList.add(this._inactiveButtonClass);
-      submitButton.disabled = true;
+      this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
     } else {
-      submitButton.classList.remove(this._inactiveButtonClass);
-      submitButton.disabled = false;
+      this._submitButton.classList.remove(this._inactiveButtonClass);
+      this._submitButton.disabled = false;
     }
   }
 
   _setEventListeners(inputEl, submitButton) {
     inputEl.addEventListener("input", () => {
       this._checkInputValidity(inputEl);
-      this._toggleButtonState(inputEl, submitButton);
+      this.toggleButtonState();
     });
   }
 
   enableValidation() {
-    const inputEls = this._formElement.querySelectorAll(this._inputSelector);
-    const submitButton = this._formElement.querySelector(
+    this._inputEls = this._formElement.querySelectorAll(this._inputSelector);
+    this._submitButton = this._formElement.querySelector(
       this._submitButtonSelector
     );
-
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
 
-    inputEls.forEach((inputEl) => {
-      this._setEventListeners(inputEl, submitButton);
+    this._inputEls.forEach((inputEl) => {
+      this._setEventListeners(inputEl, this._submitButton);
     });
   }
 }
-
-// const options = {
-//   formSelector: ".modal__container-form",
-//   inputSelector: ".modal__container-input",
-//   submitButtonSelector: ".modal__button",
-//   inactiveButtonClass: "modal__button_disabled",
-//   inputErrorClass: "modal__input_error",
-//   errorClass: "modal__error_visible",
-// };
-
-// const editFormValidator = new FormValidator(options, editForm);
-// const addFormValidator = new FormValidator(options, addForm);

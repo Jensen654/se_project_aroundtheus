@@ -96,6 +96,7 @@ function handleCardFormSubmit(evt) {
   renderCard({ name, link });
   closeModal(editCardModal);
   cardEditForm.reset();
+  addFormValidator.toggleButtonState();
 }
 
 function closeByEscape(evt) {
@@ -112,10 +113,10 @@ function handleImageClick(data) {
   );
 
   openModal(previewImageModal);
-  document.querySelector("#image-modal").classList.add("modal_opened");
-  previewImage.src = data._link;
-  previewImage.alt = data._name;
-  previewDescription.textContent = data._name;
+  // document.querySelector("#image-modal").classList.add("modal_opened");
+  previewImage.src = data.link;
+  previewImage.alt = data.name;
+  previewDescription.textContent = data.name;
 }
 
 function renderCard(cardData) {
@@ -190,10 +191,5 @@ addCardContainer.addEventListener("click", (event) => {
 
 //Rendering Cards
 initialCards.forEach((card) => {
-  const cardElement = new Card(
-    card,
-    ".card-template",
-    handleImageClick
-  ).returnCardElement();
-  cardListEl.prepend(cardElement);
+  renderCard(card);
 });
