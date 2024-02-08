@@ -52,7 +52,7 @@ export default class FormValidator {
     }
   }
 
-  _setEventListeners(inputEl, submitButton) {
+  _setEventListeners(inputEl) {
     inputEl.addEventListener("input", () => {
       this._checkInputValidity(inputEl);
       this.toggleButtonState();
