@@ -88,10 +88,16 @@ const popupProfileForm = new PopupWithForm(
   handleProfileFormSubmit
 );
 const popupCardForm = new PopupWithForm(editCardModal, handleCardFormSubmit);
+popupProfileForm.setEventListeners();
+popupCardForm.setEventListeners();
 
 //
 //Section Class
-// const section = new Section({ initialCards, renderCard }, cardListEl);
+const section = new Section(
+  { items: initialCards, renderer: renderCard },
+  cardListEl
+);
+section.renderItems();
 
 //
 //Functions
@@ -138,18 +144,9 @@ function renderCard(cardData) {
     ".card-template",
     handleImageClick
   ).returnCardElement();
-  cardListEl.prepend(cardElement);
+  // cardListEl.prepend(cardElement);
+  section.addItem(cardElement);
 }
-
-// function openModal(modal) {
-//   modal.classList.add("modal_opened");
-//   document.addEventListener("keydown", closeByEscape);
-// }
-
-// function closeModal(modal) {
-//   modal.classList.remove("modal_opened");
-//   document.removeEventListener("keydown", closeByEscape);
-// }
 
 //
 //Event Listeners
@@ -157,7 +154,6 @@ profileEditButton.addEventListener("click", function (event) {
   fillProfileInputs();
   // openModal(editProfileModal);
   popupProfileForm.open();
-  popupProfileForm.setEventListeners();
 });
 
 editModalClose.addEventListener("click", (event) => {
@@ -213,6 +209,6 @@ addCardContainer.addEventListener("click", (event) => {
 });
 
 //Rendering Cards
-initialCards.forEach((card) => {
-  renderCard(card);
-});
+// initialCards.forEach((card) => {
+//   renderCard(card);
+// });

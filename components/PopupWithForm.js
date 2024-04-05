@@ -8,8 +8,6 @@ export default class PopupWithForm extends Popup {
     this._popupForm = this._popupElement.querySelector(
       ".modal__container-form"
     );
-
-    this._isEventlistenerSet = false;
   }
 
   close() {
@@ -28,14 +26,11 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    if (!this._isEventlistenerSet) {
-      this._popupForm.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-        const formData = this._getInputValues();
-        this._handleFormSubmit(formData);
-      });
-      super.setEventListeners();
-      this._isEventlistenerSet = true;
-    }
+    this._popupForm.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      const formData = this._getInputValues();
+      this._handleFormSubmit(formData);
+    });
+    super.setEventListeners();
   }
 }
