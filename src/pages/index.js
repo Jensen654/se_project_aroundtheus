@@ -43,27 +43,12 @@ const cardEditForm = editCardModal.querySelector(".modal__container-form");
 const previewImageModal = document.querySelector("#image-modal");
 //Buttons
 const profileEditButton = document.querySelector(".profile__edit-button");
-const editSaveButton = editProfileModal.querySelector(".modal__button");
-const editModalClose = editProfileModal.querySelector(".modal__close");
-const cardModalClose = editCardModal.querySelector(".modal__close");
 const addNewCard = document.querySelector(".profile__add-button");
-const imageModalClose = previewImageModal.querySelector(".modal__close");
 //Form Data
-const modalProfileName = document.querySelector(".js-modalName");
-const modalProfileDescription = document.querySelector(".js-modalDescription");
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
-const cardTitleInput = editCardModal.querySelector(".js-modalName");
-const cardUrlInput = editCardModal.querySelector(".js-modalUrl");
 //Card template
-const cardTemplate =
-  document.querySelector(".card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
-//Modals
-const modals = Array.from(document.querySelectorAll(".js_modals"));
-const modalImage = previewImageModal.querySelector(".modal__container-image");
-const profileContainer = document.querySelector(".js-modalProfileContainer");
-const addCardContainer = document.querySelector(".js-modalAddCardContainer");
 
 //
 //Class instantiators
@@ -112,14 +97,10 @@ const userClass = new UserInfo({
 //
 //Functions
 function fillProfileInputs() {
-  // modalProfileName.value = profileName.textContent;
-  // modalProfileDescription.value = profileDescription.textContent;
   userClass.getUserInfo();
 }
 
 function handleProfileFormSubmit(data) {
-  // profileName.textContent = data.title.value;
-  // profileDescription.textContent = data.description.value;
   userClass.setUserInfo();
 
   popupProfileForm.close();
@@ -155,42 +136,6 @@ profileEditButton.addEventListener("click", function (event) {
   popupProfileForm.open();
 });
 
-editModalClose.addEventListener("click", (event) => {
-  popupProfileForm.close();
-});
-
 addNewCard.addEventListener("click", (event) => {
   popupCardForm.open();
-});
-
-cardModalClose.addEventListener("click", (event) => {
-  popupCardForm.close();
-});
-
-imageModalClose.addEventListener("click", (event) => {
-  popupPreviewImage.close();
-});
-
-previewImageModal.addEventListener("click", (event) => {
-  popupPreviewImage.close();
-});
-
-editCardModal.addEventListener("click", (event) => {
-  popupCardForm.close();
-});
-
-editProfileModal.addEventListener("click", (event) => {
-  popupProfileForm.close();
-});
-
-modalImage.addEventListener("click", (event) => {
-  event.stopPropagation();
-});
-
-profileContainer.addEventListener("click", (event) => {
-  event.stopPropagation();
-});
-
-addCardContainer.addEventListener("click", (event) => {
-  event.stopPropagation();
 });

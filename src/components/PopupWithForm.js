@@ -8,6 +8,10 @@ export default class PopupWithForm extends Popup {
     this._popupForm = this._popupElement.querySelector(
       ".modal__container-form"
     );
+
+    this._closeButton = this._popupElement.querySelector(".modal__close");
+
+    this._formElement = this._popupElement.querySelector(".modal__container");
   }
 
   close() {
@@ -32,6 +36,18 @@ export default class PopupWithForm extends Popup {
       evt.preventDefault();
       const formData = this._getInputValues();
       this._handleFormSubmit(formData);
+    });
+
+    this._closeButton.addEventListener("click", () => {
+      this.close();
+    });
+
+    this._popupElement.addEventListener("click", () => {
+      this.close();
+    });
+
+    this._formElement.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
   }
 }
