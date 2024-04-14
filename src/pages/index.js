@@ -60,8 +60,8 @@ section.renderItems();
 
 //UserInfo Class
 const userClass = new UserInfo({
-  nameSelector: profileName,
-  descriptionSelector: profileDescription,
+  nameContainer: profileName,
+  descriptionContainer: profileDescription,
 });
 
 //
@@ -73,10 +73,10 @@ function fillProfileInputs() {
   profileDescriptionInput.value = inputs.profileDescription;
 }
 
-function handleProfileFormSubmit() {
+function handleProfileFormSubmit(data) {
   userClass.setUserInfo({
-    nameInput: profileNameInput,
-    descriptionInput: profileDescriptionInput,
+    nameInput: data.title,
+    descriptionInput: data.description,
   });
 
   popupProfileForm.close();
