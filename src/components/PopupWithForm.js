@@ -9,23 +9,18 @@ export default class PopupWithForm extends Popup {
       ".modal__container-form"
     );
 
-    this._closeButton = this._popupElement.querySelector(".modal__close");
-
-    this._formElement = this._popupElement.querySelector(".modal__container");
-  }
-
-  close() {
-    this._popupForm.reset();
-    super.close();
+    this._inputList = this._popupElement.querySelectorAll(
+      ".modal__container-input"
+    );
   }
 
   _getInputValues() {
-    const cardTitle = this._popupElement.querySelector(".js-modalName");
-    const cardDescription = this._popupElement.querySelector(
-      ".js-modalDescription"
-    );
+    const data = {};
 
-    const data = { title: cardTitle, description: cardDescription };
+    this._inputList.forEach((input) => {
+      data[input.name] = input.value;
+    });
+
     return data;
   }
 
@@ -36,18 +31,7 @@ export default class PopupWithForm extends Popup {
       evt.preventDefault();
       const formData = this._getInputValues();
       this._handleFormSubmit(formData);
-    });
-
-    this._closeButton.addEventListener("click", () => {
-      this.close();
-    });
-
-    this._popupElement.addEventListener("click", () => {
-      this.close();
-    });
-
-    this._formElement.addEventListener("click", (event) => {
-      event.stopPropagation();
+      this._popupForm.reset();
     });
   }
 }
