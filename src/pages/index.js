@@ -18,6 +18,7 @@ const previewImageModal = document.querySelector("#image-modal");
 //Buttons
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addNewCard = document.querySelector(".profile__add-button");
+const modalClose = document.querySelector(".card__trash-button");
 //Form Data
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -113,4 +114,8 @@ profileEditButton.addEventListener("click", function (event) {
 
 addNewCard.addEventListener("click", (event) => {
   popupCardForm.open();
+});
+
+modalClose.addEventListener("click", (event) => {
+  popupProfileForm.open();
 });
