@@ -39,12 +39,21 @@ export default class Api {
 
   toggleCardLike(cardId) {
     fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: "PUT",
       headers: this._headers,
     })
       .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
+      .then((res) => {
+        if (!res.isLiked) {
+          fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+            method: "PUT",
+            headers: this._headers,
+          });
+        } else if (res.isLiked) {
+          fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+            method: "DELETE",
+            headers: this._headers,
+          });
+        }
       });
   }
 
@@ -60,7 +69,13 @@ export default class Api {
       });
   }
 
-  updateProfilePic() {}
+  updateProfilePic(avatar) {
+    fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(avatar),
+    });
+  }
 }
 
 const api = new Api({

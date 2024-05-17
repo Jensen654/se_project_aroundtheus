@@ -6,6 +6,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 import { initialCards, options } from "../utils/constants.js";
+import Api from "../components/Api.js";
 
 //Main Selectors
 const editCardModal = document.querySelector("#card-modal");
@@ -52,18 +53,29 @@ const popupCardForm = new PopupWithForm(editCardModal, handleCardFormSubmit);
 popupProfileForm.setEventListeners();
 popupCardForm.setEventListeners();
 
-//Section Class
-const section = new Section(
-  { items: initialCards, renderer: renderCard },
-  cardListEl
-);
-section.renderItems();
-
 //UserInfo Class
 const userClass = new UserInfo({
   nameContainer: profileName,
   descriptionContainer: profileDescription,
 });
+
+//Api Class
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "1755563a-df02-4ecd-aa91-5c5958bedadf",
+    "Content-Type": "application/json",
+  },
+});
+
+const apiCards = api.getInitialCards();
+
+//Section Class
+const section = new Section(
+  { items: apiCards, renderer: renderCard },
+  cardListEl
+);
+section.renderItems();
 
 //
 //Functions
@@ -90,6 +102,7 @@ function handleCardFormSubmit(data) {
   popupCardForm.close();
   cardEditForm.reset();
   addFormValidator.toggleButtonState();
+  api.addCard({ name: name, link: link });
 }
 
 function handleImageClick(data) {
@@ -116,6 +129,6 @@ addNewCard.addEventListener("click", (event) => {
   popupCardForm.open();
 });
 
-modalClose.addEventListener("click", (event) => {
-  popupProfileForm.open();
-});
+// modalClose.addEventListener("click", (event) => {
+//   popupProfileForm.open();
+// });
