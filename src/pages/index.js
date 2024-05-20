@@ -68,14 +68,18 @@ const api = new Api({
   },
 });
 
-const apiCards = api.getInitialCards();
-
 //Section Class
 const section = new Section(
-  { items: apiCards, renderer: renderCard },
+  { items: initialCards, renderer: renderCard },
   cardListEl
 );
 section.renderItems();
+
+api.getInitialCards().then((res) => {
+  res.forEach((card) => {
+    renderCard(card);
+  });
+});
 
 //
 //Functions
@@ -90,6 +94,11 @@ function handleProfileFormSubmit(data) {
   userClass.setUserInfo({
     nameInput: data.title,
     descriptionInput: data.description,
+  });
+
+  api.updateProfileInfo({
+    name: data.title,
+    about: data.description,
   });
 
   popupProfileForm.close();

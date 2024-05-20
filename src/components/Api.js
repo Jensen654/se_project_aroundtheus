@@ -7,11 +7,24 @@ export default class Api {
   getInitialCards() {
     fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        Promise.reject();
+      }
+    });
+    //   .then((result) => {
+    //     const apiCards = {};
+    //     result.forEach((res) => {
+    //       apiCards["name"] = res.name;
+    //       apiCards["link"] = res.link;
+    //     });
+
+    //     console.log(apiCards);
+
+    //     return apiCards;
+    //   });
   }
 
   addCard(body) {
