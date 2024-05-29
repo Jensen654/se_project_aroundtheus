@@ -140,6 +140,8 @@ function renderCard(cardData) {
   section.addItem(cardElement);
 }
 
+function deleteCard(data) {}
+
 //
 //Event Listeners
 profileEditButton.addEventListener("click", function (event) {
