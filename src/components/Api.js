@@ -5,7 +5,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).then((res) => {
       if (res.ok) {
@@ -14,17 +14,6 @@ export default class Api {
         Promise.reject();
       }
     });
-    //   .then((result) => {
-    //     const apiCards = {};
-    //     result.forEach((res) => {
-    //       apiCards["name"] = res.name;
-    //       apiCards["link"] = res.link;
-    //     });
-
-    //     console.log(apiCards);
-
-    //     return apiCards;
-    //   });
   }
 
   addCard(body) {

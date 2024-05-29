@@ -7,6 +7,7 @@ import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 import { initialCards, options } from "../utils/constants.js";
 import Api from "../components/Api.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 
 //Main Selectors
 const editCardModal = document.querySelector("#card-modal");
@@ -16,6 +17,7 @@ const profileEditForm = editProfileModal.querySelector(
 );
 const cardEditForm = editCardModal.querySelector(".modal__container-form");
 const previewImageModal = document.querySelector("#image-modal");
+const deleteCardModal = document.querySelector("#trash-modal");
 //Buttons
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addNewCard = document.querySelector(".profile__add-button");
@@ -29,6 +31,7 @@ const profileDescriptionInput =
 
 //Card template
 const cardListEl = document.querySelector(".cards__list");
+const cardTrashButton = document.querySelector(".card__trash-button");
 
 //
 //Class instantiators
@@ -53,6 +56,13 @@ const popupCardForm = new PopupWithForm(editCardModal, handleCardFormSubmit);
 popupProfileForm.setEventListeners();
 popupCardForm.setEventListeners();
 
+//PopupWithDelete Class
+const popupWithDeleteCard = new PopupWithDelete(
+  deleteCardModal,
+  handleDeleteCardFormSubmit
+);
+popupWithDeleteCard.setEventListeners();
+
 //UserInfo Class
 const userClass = new UserInfo({
   nameContainer: profileName,
@@ -69,16 +79,10 @@ const api = new Api({
 });
 
 //Section Class
-const section = new Section(
-  { items: initialCards, renderer: renderCard },
-  cardListEl
-);
-section.renderItems();
+const section = new Section({ renderer: renderCard }, cardListEl);
 
-api.getInitialCards().then((res) => {
-  res.forEach((card) => {
-    renderCard(card);
-  });
+api.getInitialCards().then((cardItems) => {
+  section.renderItems(cardItems);
 });
 
 //
@@ -114,15 +118,24 @@ function handleCardFormSubmit(data) {
   api.addCard({ name: name, link: link });
 }
 
+function handleDeleteCardFormSubmit() {
+  api.deleteCard();
+}
+
 function handleImageClick(data) {
   popupPreviewImage.open(data);
+}
+
+function handleDeleteClick() {
+  popupWithDeleteCard.open();
 }
 
 function renderCard(cardData) {
   const cardElement = new Card(
     cardData,
     ".card-template",
-    handleImageClick
+    handleImageClick,
+    handleDeleteClick
   ).returnCardElement();
   section.addItem(cardElement);
 }
@@ -137,6 +150,10 @@ profileEditButton.addEventListener("click", function (event) {
 addNewCard.addEventListener("click", (event) => {
   popupCardForm.open();
 });
+
+// cardTrashButton.addEventListener("click", () => {
+//   popupDeleteCardForm.open();
+// });
 
 // modalClose.addEventListener("click", (event) => {
 //   popupProfileForm.open();
