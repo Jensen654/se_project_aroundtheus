@@ -43,20 +43,52 @@ export default class Api {
     fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
     })
-      .then((res) => res.json())
       .then((res) => {
-        if (!res.isLiked) {
-          fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-            method: "PUT",
-            headers: this._headers,
-          });
-        } else if (res.isLiked) {
-          fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-            method: "DELETE",
-            headers: this._headers,
-          });
+        if (res.ok) {
+          return res.json();
+        } else {
+          Promise.reject();
         }
+      })
+      .then((res) => {
+        console.log(res);
       });
+  }
+
+  // toggleCardLike(cardId) {
+  //   fetch(`${this._baseUrl}/cards/${cardId}`, {
+  //     headers: this._headers,
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       if (!res.isLiked) {
+  //         fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  //           method: "PUT",
+  //           headers: this._headers,
+  //         })
+  //           .then((res) => res.json())
+  //           .then((res) => console.log(res));
+  //       } else if (res.isLiked) {
+  //         fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  //           method: "DELETE",
+  //           headers: this._headers,
+  //         })
+  //           .then((res) => res.json())
+  //           .then((res) => console.log(res));
+  //       }
+  //     });
+  // }
+
+  getProfileInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        Promise.reject();
+      }
+    });
   }
 
   updateProfileInfo(body) {

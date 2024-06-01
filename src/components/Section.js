@@ -7,7 +7,6 @@ export default class Section {
   renderItems(items) {
     items.forEach((item) => {
       return this._render(item);
-      // this.addItem(renderedItem);
     });
   }
 
