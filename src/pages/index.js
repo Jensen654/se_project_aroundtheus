@@ -8,34 +8,42 @@ import "./index.css";
 import { initialCards, options } from "../utils/constants.js";
 import Api from "../components/Api.js";
 import PopupWithDelete from "../components/PopupWithDelete.js";
+import PopupWithProfilePicForm from "../components/PopupWithProfilePicForm.js";
 
 //Main Selectors
 const editCardModal = document.querySelector("#card-modal");
 const editProfileModal = document.querySelector("#edit-modal");
+const profileImageModal = document.querySelector("#profile-image-modal");
 const profileEditForm = editProfileModal.querySelector(
   ".modal__container-form"
 );
 const cardEditForm = editCardModal.querySelector(".modal__container-form");
+const profileImageEditForm = profileImageModal.querySelector(
+  ".modal__container-form"
+);
 const previewImageModal = document.querySelector("#image-modal");
 const deleteCardModal = document.querySelector("#trash-modal");
-const profileImageModal = document.querySelector("#profile-image-modal");
+const profilePic = document.querySelector(".profile__image");
 //Buttons
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileImageEditButton = document.querySelector(
   ".profile__image_edit-button"
 );
 const addNewCard = document.querySelector(".profile__add-button");
-const modalClose = document.querySelector(".card__trash-button");
 //Form Data
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileNameInput = editProfileModal.querySelector("#modal-name");
 const profileDescriptionInput =
   editProfileModal.querySelector("#modal-description");
-
+const profilePicModalInput = profileImageModal.querySelector(
+  ".modal__container-input"
+);
+const addCardButton = editCardModal.querySelector(".modal__button");
+const editProfileButton = editProfileModal.querySelector(".modal__button");
+const deleteCardButton = deleteCardModal.querySelector(".modal__button");
 //Card template
 const cardListEl = document.querySelector(".cards__list");
-const cardTrashButton = document.querySelector(".card__trash-button");
 
 //
 //Class instantiators
@@ -43,9 +51,14 @@ const cardTrashButton = document.querySelector(".card__trash-button");
 //FormValidator class
 const editFormValidator = new FormValidator(options, profileEditForm);
 const addFormValidator = new FormValidator(options, cardEditForm);
+const profilePicFormValidator = new FormValidator(
+  options,
+  profileImageEditForm
+);
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+profilePicFormValidator.enableValidation();
 
 //PopupWithImage Class
 const popupPreviewImage = new PopupWithImage(previewImageModal);
@@ -57,12 +70,14 @@ const popupProfileForm = new PopupWithForm(
   handleProfileFormSubmit
 );
 const popupCardForm = new PopupWithForm(editCardModal, handleCardFormSubmit);
-const popupProfileImageForm = new PopupWithForm(
+popupProfileForm.setEventListeners();
+popupCardForm.setEventListeners();
+
+//PopupWithProfilePicForm
+const popupProfileImageForm = new PopupWithProfilePicForm(
   profileImageModal,
   handleProfileImageFormSubmit
 );
-popupProfileForm.setEventListeners();
-popupCardForm.setEventListeners();
 popupProfileImageForm.setEventListeners();
 
 //PopupWithDelete Class
@@ -72,7 +87,7 @@ const popupWithDeleteCard = new PopupWithDelete(
 );
 
 //UserInfo Class
-const userClass = new UserInfo({
+const userInfo = new UserInfo({
   nameContainer: profileName,
   descriptionContainer: profileDescription,
 });
@@ -86,8 +101,6 @@ const api = new Api({
   },
 });
 
-api.getInitialCards().then((res) => console.log(res));
-
 //Section Class
 const section = new Section({ renderer: renderCard }, cardListEl);
 
@@ -96,7 +109,9 @@ api.getInitialCards().then((cardItems) => {
 });
 
 api.getProfileInfo().then((res) => {
-  return userClass.setUserInfo({
+  profilePic.src = res.avatar;
+
+  return userInfo.setUserInfo({
     nameInput: res.name,
     descriptionInput: res.about,
   });
@@ -109,42 +124,64 @@ api.getProfileInfo().then((res) => {
 //
 //Functions
 function fillProfileInputs() {
-  const inputs = userClass.getUserInfo();
+  const inputs = userInfo.getUserInfo();
 
   profileNameInput.value = inputs.profileName;
   profileDescriptionInput.value = inputs.profileDescription;
 }
 
 function handleProfileFormSubmit(data) {
-  userClass.setUserInfo({
-    nameInput: data.title,
-    descriptionInput: data.description,
-  });
-
-  api.updateProfileInfo({
-    name: data.title,
-    about: data.description,
-  });
-
-  popupProfileForm.close();
+  api
+    .updateProfileInfo({
+      name: data.title,
+      about: data.description,
+    })
+    .then(() => {
+      userInfo.setUserInfo({
+        nameInput: data.title,
+        descriptionInput: data.description,
+      });
+      popupProfileForm.close();
+      setTimeout(() => {
+        editProfileButton.textContent = "Save";
+      }, 500);
+    });
 }
 
 function handleCardFormSubmit(data) {
   const name = data.title;
   const link = data.description;
-  renderCard({ name, link });
-  popupCardForm.close();
-  cardEditForm.reset();
-  addFormValidator.toggleButtonState();
-  api.addCard({ name: name, link: link });
+  api.addCard({ name: name, link: link }).then(() => {
+    renderCard({ name, link });
+    popupCardForm.close();
+    cardEditForm.reset();
+    addFormValidator.toggleButtonState();
+    setTimeout(() => {
+      addCardButton.textContent = "Create";
+    }, 500);
+  });
+  // renderCard({ name, link });
+  // popupCardForm.close();
+  // cardEditForm.reset();
+  // addFormValidator.toggleButtonState();
 }
 
 function handleDeleteCardFormSubmit(cardEl) {
-  api.deleteCard(cardEl._id);
-  cardEl.remove();
+  api.deleteCard(cardEl._id).then(() => {
+    cardEl.remove();
+    setTimeout(() => {
+      deleteCardButton.textContent = "Yes";
+    }, 500);
+  });
 }
 
-function handleProfileImageFormSubmit(data) {}
+function handleProfileImageFormSubmit(data) {
+  profilePic.src = profilePicModalInput.value;
+
+  api.updateProfilePic(data);
+
+  popupProfileImageForm.close();
+}
 
 function handleImageClick(data) {
   popupPreviewImage.open(data);
@@ -159,13 +196,18 @@ function handleLikeClick(cardId) {
   api.toggleCardLike(cardId);
 }
 
+function handleDislikeClick(cardId) {
+  api.toggleCardDislike(cardId);
+}
+
 function renderCard(cardData) {
   const cardElement = new Card(
     cardData,
     ".card-template",
     handleImageClick,
     handleDeleteClick,
-    handleLikeClick
+    handleLikeClick,
+    handleDislikeClick
   ).returnCardElement();
   section.addItem(cardElement);
 }

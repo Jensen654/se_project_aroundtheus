@@ -17,30 +17,29 @@ export default class Api {
   }
 
   addCard(body) {
-    fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        Promise.reject();
+      }
+    });
   }
 
   deleteCard(cardId) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+    }).then((res) => res.json());
   }
 
   toggleCardLike(cardId) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
       headers: this._headers,
     })
       .then((res) => {
@@ -55,29 +54,22 @@ export default class Api {
       });
   }
 
-  // toggleCardLike(cardId) {
-  //   fetch(`${this._baseUrl}/cards/${cardId}`, {
-  //     headers: this._headers,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       if (!res.isLiked) {
-  //         fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-  //           method: "PUT",
-  //           headers: this._headers,
-  //         })
-  //           .then((res) => res.json())
-  //           .then((res) => console.log(res));
-  //       } else if (res.isLiked) {
-  //         fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-  //           method: "DELETE",
-  //           headers: this._headers,
-  //         })
-  //           .then((res) => res.json())
-  //           .then((res) => console.log(res));
-  //       }
-  //     });
-  // }
+  toggleCardDislike(cardId) {
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          Promise.reject();
+        }
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }
 
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
@@ -92,30 +84,31 @@ export default class Api {
   }
 
   updateProfileInfo(body) {
-    fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        res.json();
+      } else {
+        Promise.reject();
+      }
+    });
   }
 
   updateProfilePic(avatar) {
+    console.log(avatar);
     fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify(avatar),
+      body: JSON.stringify({ avatar }),
+    }).then((res) => {
+      if (res.ok) {
+        res.json();
+      } else {
+        Promise.reject();
+      }
     });
   }
 }
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "c56e30dc-2883-4270-a59e-b2f7bae969c6",
-    "Content-Type": "application/json",
-  },
-});

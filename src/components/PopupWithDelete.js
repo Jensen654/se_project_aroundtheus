@@ -8,6 +8,8 @@ export default class PopupWithDelete extends Popup {
 
     this._deleteCardForm =
       this._popupElement.querySelector(".modal__container");
+
+    this._deleteCardButton = this._popupElement.querySelector(".modal__button");
   }
 
   setEventListeners(cardEl) {
@@ -15,6 +17,7 @@ export default class PopupWithDelete extends Popup {
 
     this._deleteCardForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      this._deleteCardButton.textContent = "Saving...";
       this._handleDeleteCardFormSubmit(cardEl);
       this.close();
     });
