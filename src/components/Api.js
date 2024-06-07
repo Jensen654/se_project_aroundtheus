@@ -10,9 +10,9 @@ export default class Api {
     }).then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject();
       }
+
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -24,9 +24,8 @@ export default class Api {
     }).then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject();
       }
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -34,41 +33,36 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => res.json());
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
   }
 
   toggleCardLike(cardId) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          Promise.reject();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
   }
 
   toggleCardDislike(cardId) {
     fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          Promise.reject();
-        }
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
   }
 
   getProfileInfo() {
@@ -77,9 +71,8 @@ export default class Api {
     }).then((res) => {
       if (res.ok) {
         return res.json();
-      } else {
-        Promise.reject();
       }
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -90,25 +83,22 @@ export default class Api {
       body: JSON.stringify(body),
     }).then((res) => {
       if (res.ok) {
-        res.json();
-      } else {
-        Promise.reject();
+        return res.json();
       }
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
   updateProfilePic(avatar) {
-    console.log(avatar);
     fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({ avatar }),
     }).then((res) => {
       if (res.ok) {
-        res.json();
-      } else {
-        Promise.reject();
+        return res.json();
       }
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 }

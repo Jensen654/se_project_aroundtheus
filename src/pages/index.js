@@ -85,6 +85,7 @@ const popupWithDeleteCard = new PopupWithDelete(
   deleteCardModal,
   handleDeleteCardFormSubmit
 );
+popupWithDeleteCard.setEventListeners();
 
 //UserInfo Class
 const userInfo = new UserInfo({
@@ -189,7 +190,19 @@ function handleImageClick(data) {
 
 function handleDeleteClick(cardEl) {
   popupWithDeleteCard.open();
-  popupWithDeleteCard.setEventListeners(cardEl);
+  // call handleDeleteCard...
+  popupWithDeleteCard.setSubmitAction(() => {
+    // handle deletion
+    api.deleteCard(cardEl._id).then(() => {
+      cardEl.remove();
+      setTimeout(() => {
+        deleteCardButton.textContent = "Yes";
+      }, 500);
+    });
+  });
+
+  // call setEventListeners on instantiation
+  // popupWithDeleteCard.setEventListeners(cardEl);
 }
 
 function handleLikeClick(cardId) {

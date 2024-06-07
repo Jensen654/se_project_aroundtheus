@@ -1,10 +1,8 @@
 import Popup from "./Popup";
 
 export default class PopupWithDelete extends Popup {
-  constructor(popupSelector, handleDeleteCardFormSubmit) {
+  constructor(popupSelector) {
     super(popupSelector);
-
-    this._handleDeleteCardFormSubmit = handleDeleteCardFormSubmit;
 
     this._deleteCardForm =
       this._popupElement.querySelector(".modal__container");
@@ -12,14 +10,18 @@ export default class PopupWithDelete extends Popup {
     this._deleteCardButton = this._popupElement.querySelector(".modal__button");
   }
 
-  setEventListeners(cardEl) {
+  setEventListeners() {
     super.setEventListeners();
 
     this._deleteCardForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
       this._deleteCardButton.textContent = "Saving...";
-      this._handleDeleteCardFormSubmit(cardEl);
+      this._handleDeleteCardFormSubmit();
       this.close();
     });
+  }
+
+  setSubmitAction(action) {
+    this._handleDeleteCardFormSubmit = action;
   }
 }
