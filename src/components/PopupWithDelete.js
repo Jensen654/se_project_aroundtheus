@@ -1,27 +1,33 @@
 import Popup from "./Popup";
 
 export default class PopupWithDelete extends Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, loadingButtonText) {
     super(popupSelector);
+    this._buttonText = this._submitButton.textContent;
+    this._loadingButtonText = loadingButtonText;
+  }
 
-    this._deleteCardForm =
-      this._popupElement.querySelector(".modal__container");
+  showLoading() {
+    this._submitButton.textContent = this._loadingButtonText;
+  }
 
-    this._deleteCardButton = this._popupElement.querySelector(".modal__button");
+  hideLoading() {
+    this._submitButton.textContent = this._buttonText;
   }
 
   setEventListeners() {
     super.setEventListeners();
 
-    this._deleteCardForm.addEventListener("submit", (evt) => {
+    this._modalContainer.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._deleteCardButton.textContent = "Saving...";
-      this._handleDeleteCardFormSubmit();
-      this.close();
+      this._handleDeleteFormSubmit().then(() => {
+        this.close();
+      });
+      // this.close();
     });
   }
 
   setSubmitAction(action) {
-    this._handleDeleteCardFormSubmit = action;
+    this._handleDeleteFormSubmit = action;
   }
 }

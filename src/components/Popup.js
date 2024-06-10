@@ -7,6 +7,8 @@ export default class Popup {
     this._modalContainer =
       this._popupElement.querySelector(".js-modalContainer");
 
+    this._submitButton = this._popupElement.querySelector(".modal__button");
+
     this._boundHandleEscapeClose = this._handleEscapeClose.bind(this);
   }
 
