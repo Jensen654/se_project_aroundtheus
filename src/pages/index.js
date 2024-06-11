@@ -133,6 +133,8 @@ api
 //   api.addCard(card);
 // });
 
+api.getInitialCards().then((res) => console.log(res));
+
 //
 //Functions
 function fillProfileInputs() {
@@ -170,8 +172,8 @@ function handleCardFormSubmit(data) {
 
   api
     .addCard({ name: name, link: link })
-    .then(() => {
-      renderCard({ name, link });
+    .then((res) => {
+      renderCard(res);
       popupCardForm.close();
       cardEditForm.reset();
       addFormValidator.toggleButtonState();
@@ -207,7 +209,7 @@ function handleDeleteClick(cardEl) {
   popupWithDeleteCard.open();
   popupWithDeleteCard.setSubmitAction(() => {
     popupWithDeleteCard.showLoading();
-    return api
+    api
       .deleteCard(cardEl._id)
       .then(() => {
         cardEl.remove();
@@ -221,15 +223,20 @@ function handleDeleteClick(cardEl) {
 }
 
 function handleLikeButton(card) {
-  if (card.isLiked) {
+  const cardLike = card.isLiked();
+  if (cardLike) {
     api
       .toggleCardDislike(card._id)
-      .then((res) => card.setIsLiked(res._isLiked))
+      .then((res) => {
+        card.setIsLiked(res.isLiked);
+      })
       .catch((err) => console.log(err));
-  } else if (!card.isLiked) {
+  } else if (!cardLike) {
     api
       .toggleCardLike(card._id)
-      .then((res) => card.setIsLiked(res._isLiked))
+      .then((res) => {
+        card.setIsLiked(res.isLiked);
+      })
       .catch((err) => console.log(err));
   }
 }
