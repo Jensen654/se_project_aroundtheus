@@ -4,8 +4,7 @@ export default class Card {
     cardSelector,
     handleImageClick,
     handleDeleteClick,
-    handleLikeClick,
-    handleLikeDelete
+    handleLikeButton
   ) {
     this._name = data.name;
     this._link = data.link;
@@ -14,8 +13,9 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
-    this._handleLikeClick = handleLikeClick;
-    this._handleLikeDelete = handleLikeDelete;
+    this._handleLikeButton = handleLikeButton;
+    // this._handleLikeClick = handleLikeClick;
+    // this._handleLikeDelete = handleLikeDelete;
   }
 
   _setEventListeners() {
@@ -23,7 +23,7 @@ export default class Card {
       this._handleImageClick({ name: this._name, link: this._link })
     );
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeButton();
+      this._handleLikeButton(this);
     });
     this._deleteButton.addEventListener("click", () => {
       this._handleDeleteClick(this);
@@ -35,23 +35,23 @@ export default class Card {
     // this._cardElement = null;
   }
 
-  _handleLikeButton() {
-    if (!this._isLiked) {
-      this._handleLikeClick(this._id)
-        .then(() => {
-          this._likeButton.classList.add("card__like-button_active");
-          this._isLiked = true;
-        })
-        .catch((err) => console.log(err));
-    } else if (this._isLiked) {
-      this._handleLikeDelete(this._id)
-        .then(() => {
-          this._likeButton.classList.remove("card__like-button_active");
-          this._isLiked = false;
-        })
-        .catch((err) => console.log(err));
-    }
-  }
+  // _handleLikeButton() {
+  //   if (!this._isLiked) {
+  //     this._handleLikeClick(this._id)
+  //       .then(() => {
+  //         this._likeButton.classList.add("card__like-button_active");
+  //         this._isLiked = true;
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else if (this._isLiked) {
+  //     this._handleLikeDelete(this._id)
+  //       .then(() => {
+  //         this._likeButton.classList.remove("card__like-button_active");
+  //         this._isLiked = false;
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }
 
   setIsLiked(isLiked) {
     this._isLiked = isLiked;

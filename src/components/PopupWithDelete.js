@@ -3,6 +3,7 @@ import Popup from "./Popup";
 export default class PopupWithDelete extends Popup {
   constructor(popupSelector, loadingButtonText) {
     super(popupSelector);
+    this._submitButton = this._popupElement.querySelector(".modal__button");
     this._buttonText = this._submitButton.textContent;
     this._loadingButtonText = loadingButtonText;
   }
@@ -20,10 +21,7 @@ export default class PopupWithDelete extends Popup {
 
     this._modalContainer.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleDeleteFormSubmit().then(() => {
-        this.close();
-      });
-      // this.close();
+      this._handleDeleteFormSubmit();
     });
   }
 

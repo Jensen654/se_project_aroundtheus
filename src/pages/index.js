@@ -38,9 +38,7 @@ const profileDescriptionInput =
 const profilePicModalInput = profileImageModal.querySelector(
   ".modal__container-input"
 );
-const addCardButton = editCardModal.querySelector(".modal__button");
-const editProfileButton = editProfileModal.querySelector(".modal__button");
-const deleteCardButton = deleteCardModal.querySelector(".modal__button");
+
 //Card template
 const cardListEl = document.querySelector(".cards__list");
 //Other
@@ -122,7 +120,7 @@ api
   .getProfileInfo()
   .then((res) => {
     // profilePic.src = res.avatar;
-    userInfo.setAvatar(res);
+    userInfo.setAvatar(res.avatar);
 
     return userInfo.setUserInfo({
       nameInput: res.name,
@@ -145,13 +143,14 @@ function fillProfileInputs() {
 }
 
 function handleProfileFormSubmit(data) {
+  popupProfileForm.showLoading();
+
   api
     .updateProfileInfo({
       name: data.title,
       about: data.description,
     })
     .then(() => {
-      popupProfileForm.showLoading();
       userInfo.setUserInfo({
         nameInput: data.title,
         descriptionInput: data.description,
@@ -167,10 +166,11 @@ function handleProfileFormSubmit(data) {
 function handleCardFormSubmit(data) {
   const name = data.title;
   const link = data.description;
+  popupCardForm.showLoading();
+
   api
     .addCard({ name: name, link: link })
     .then(() => {
-      popupCardForm.showLoading();
       renderCard({ name, link });
       popupCardForm.close();
       cardEditForm.reset();
@@ -180,19 +180,15 @@ function handleCardFormSubmit(data) {
     .finally(() => {
       popupCardForm.hideLoading();
     });
-  // renderCard({ name, link });
-  // popupCardForm.close();
-  // cardEditForm.reset();
-  // addFormValidator.toggleButtonState();
 }
 
 function handleProfileImageFormSubmit(data) {
-  profilePic.src = profilePicModalInput.value;
+  popupProfileImageForm.showLoading();
 
   api
     .updateProfilePic(data)
     .then(() => {
-      popupProfileImageForm.showLoading();
+      userInfo.setAvatar(profilePicModalInput.value);
       popupProfileImageForm.close();
       profileImageEditForm.reset();
       addFormValidator.toggleButtonState();
@@ -215,6 +211,7 @@ function handleDeleteClick(cardEl) {
       .deleteCard(cardEl._id)
       .then(() => {
         cardEl.remove();
+        popupWithDeleteCard.close();
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -223,13 +220,27 @@ function handleDeleteClick(cardEl) {
   });
 }
 
-function handleLikeClick(cardId) {
-  return api.toggleCardLike(cardId);
+function handleLikeButton(card) {
+  if (card.isLiked) {
+    api
+      .toggleCardDislike(card._id)
+      .then((res) => card.setIsLiked(res._isLiked))
+      .catch((err) => console.log(err));
+  } else if (!card.isLiked) {
+    api
+      .toggleCardLike(card._id)
+      .then((res) => card.setIsLiked(res._isLiked))
+      .catch((err) => console.log(err));
+  }
 }
 
-function handleDislikeClick(cardId) {
-  return api.toggleCardDislike(cardId);
-}
+// function handleLikeClick(cardId) {
+//   return api.toggleCardLike(cardId);
+// }
+
+// function handleDislikeClick(cardId) {
+//   return api.toggleCardDislike(cardId);
+// }
 
 function renderCard(cardData) {
   const cardElement = new Card(
@@ -237,8 +248,7 @@ function renderCard(cardData) {
     ".card-template",
     handleImageClick,
     handleDeleteClick,
-    handleLikeClick,
-    handleDislikeClick
+    handleLikeButton
   ).returnCardElement();
   section.addItem(cardElement);
 }

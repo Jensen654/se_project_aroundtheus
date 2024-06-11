@@ -13,8 +13,8 @@ export default class UserInfo {
     return data;
   }
 
-  setAvatar(response) {
-    this._profilePic.src = response.avatar;
+  setAvatar(imageLink) {
+    this._profilePic.src = imageLink;
   }
 
   setUserInfo(data) {
