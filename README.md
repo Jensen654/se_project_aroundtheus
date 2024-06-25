@@ -1,6 +1,6 @@
 # Project 3: Around The U.S.
 
-https://www.loom.com/share/d181e1a318a6471e8881db7956b002e4?sid=83f0b797-4ada-453d-8d89-00570e3dc21b
+https://youtu.be/4ypwAk8-iDg
 
 ### Overview
 
