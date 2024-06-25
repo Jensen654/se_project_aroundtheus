@@ -18,15 +18,14 @@
 
       <main class="content page__section">
         <section class="profile">
-          <img
-            class="profile__image"
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Jacques Cousteau"
-          />
+          <div class="profile__image_container">
+            <div class="profile__image_edit-button"></div>
+            <img class="profile__image" src="#" alt="Profile Image" />
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button type="button" class="profile__edit-button"></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button type="button" class="profile__add-button"></button>
         </section>
@@ -111,12 +110,47 @@
       </div>
     </div>
 
+    <div id="profile-image-modal" class="modal js-modals">
+      <div class="modal__container js-modalContainer">
+        <button type="button" class="modal__close"></button>
+        <h2 class="modal__heading">Change Profile Picture</h2>
+        <form class="modal__container-form js-modal-add-card-form">
+          <input
+            id="modal-image-url"
+            class="modal__container-input js-modalDescription"
+            type="url"
+            placeholder="Image Link"
+            name="avatar"
+            required
+          />
+          <span id="modal-image-url-error" class="modal__error"></span>
+          <button
+            type="submit"
+            class="modal__button modal__button_disabled"
+            disabled
+          >
+            Create
+          </button>
+        </form>
+      </div>
+    </div>
+
     <div id="image-modal" class="modal js-modals">
       <div class="modal__container-image js-modalContainer">
         <button type="button" class="modal__close"></button>
         <img src="#" alt="" class="modal__image" />
         <p class="modal__image-description"></p>
       </div>
+    </div>
+
+    <div id="trash-modal" class="modal">
+      <form class="modal__container js-modalContainer">
+        <button type="button" class="modal__close"></button>
+        <h2 class="modal__heading">Are you sure?</h2>
+        <button type="submit" class="modal__button modal__container-form">
+          Yes
+        </button>
+      </form>
     </div>
 
     <template class="card-template">

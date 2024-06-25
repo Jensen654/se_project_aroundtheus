@@ -5,13 +5,42 @@
   padding-bottom: 51px;
 }
 
-.profile__image {
+.profile__image_container {
   height: 120px;
   width: 120px;
+  position: relative;
+  margin-right: 24px;
+}
+
+.profile__image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
   border-radius: 50%;
   object-fit: cover;
   background-position: center;
-  margin-right: 24px;
+}
+
+.profile__image:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
+.profile__image_edit-button {
+  position: absolute;
+  background: transparent url(../images/editButton.svg) center no-repeat;
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  opacity: 0;
+  z-index: 1;
+  background-size: 26px 26px;
+}
+
+.profile__image_edit-button:hover {
+  cursor: pointer;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .profile__info {

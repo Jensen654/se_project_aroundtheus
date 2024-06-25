@@ -1,7 +1,8 @@
 export default class UserInfo {
-  constructor({ nameContainer, descriptionContainer }) {
+  constructor({ nameContainer, descriptionContainer, profilePic }) {
     this._nameContainer = nameContainer;
     this._descriptionContainer = descriptionContainer;
+    this._profilePic = profilePic;
   }
 
   getUserInfo() {
@@ -10,6 +11,10 @@ export default class UserInfo {
     data["profileDescription"] = this._descriptionContainer.textContent;
 
     return data;
+  }
+
+  setAvatar(imageLink) {
+    this._profilePic.src = imageLink;
   }
 
   setUserInfo(data) {
