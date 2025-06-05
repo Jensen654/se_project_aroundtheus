@@ -1,6 +1,7 @@
 # Project 3: Around The U.S.
 
 https://youtu.be/4ypwAk8-iDg
+
 [Live Demo](https://jensen654.github.io/se_project_aroundtheus/)
 
 ### Overview
